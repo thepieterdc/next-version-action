@@ -1,0 +1,24 @@
+name: next-version-action
+description: Calculates the next semver version.
+author: thepieterdc
+
+inputs:
+  current:
+    description: 'Current version number (examples: v1.0.0, 1.0.0)'
+    required: true
+  prefix:
+    description: 'Prefix to prepend to the result, example: v'
+    required: false
+  type:
+    description: 'Type of version increase (major, minor, patch)'
+    required: true
+
+outputs:
+  next:
+    description:
+      'The next version, optionally with prefix (examples: 1.0.0, v1.1.0,
+      v1.0.1)'
+
+runs:
+  using: node24
+  main: dist/index.js
