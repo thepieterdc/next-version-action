@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run format:check
+
+      - run: npm run lint
+
+      - run: npm run ci-test
+
+  test-action:
+    name: GitHub Actions Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: ./
+        id: major
+        with:
+          current: 'v1.0.0'
+          prefix: 'v'
+          type: 'major'
+
+      - uses: ./
+        id: minor
+        with:
+          current: 'v1.0.0'
+          prefix: 'v'
+          type: 'minor'
+
+      - uses: ./
+        id: patch
+        with:
+          current: 'v1.0.0'
+          prefix: 'v'
+          type: 'patch'
+
+      - if:
+          steps.major.outputs.next != 'v2.0.0' || steps.minor.outputs.next !=
+          'v1.1.0' || steps.patch.outputs.next != 'v1.0.1'
+        run: exit 1
