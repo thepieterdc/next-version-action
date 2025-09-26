@@ -1,6 +1,10 @@
-import { Inputs } from './types';
+import { Inputs, ReleaseType } from './types.js';
 
-export function calculateNextVersion({ current, prefix, type }: Inputs) {
+const PARTS_PRECEDENCE = Object.fromEntries(
+  ['major', 'minor', 'patch'].map((type, idx) => [type, idx]),
+) as Record<ReleaseType, number>;
+
+export function calculateNextVersion({ current, prefix, releaseType }: Inputs) {
   // Strip the prefix from the version.
   const unprefixedCurrentVersion =
     prefix && current.startsWith(prefix)
@@ -10,16 +14,19 @@ export function calculateNextVersion({ current, prefix, type }: Inputs) {
   // Decompose the version.
   const [major, minor, patch] = unprefixedCurrentVersion
     .split('.')
-    .map((part) => parseInt(part));
+    .map((part: string) => parseInt(part));
 
-  // Increment the version.
-  const majorInc = type === 'major' ? 1 : 0;
-  const minorInc = type === 'minor' ? 1 : 0;
-  const patchInc = type === 'patch' ? 1 : 0;
-  const nextVersion = [
-    major + majorInc,
-    minor + minorInc,
-    patch + patchInc,
-  ].join('.');
-  return `${prefix || ''}${nextVersion}`;
+  // Update the current version.
+  const nextVersion = { major, minor, patch } as Record<ReleaseType, number>;
+  for (const [type, value] of Object.entries(nextVersion)) {
+    if (type === releaseType) {
+      nextVersion[type] = value + 1;
+      // @ts-expect-error cannot type
+    } else if (PARTS_PRECEDENCE[releaseType] < PARTS_PRECEDENCE[type]) {
+      nextVersion[type as ReleaseType] = 0;
+    }
+  }
+
+  // Build the final version.
+  return `${prefix || ''}${nextVersion.major}.${nextVersion.minor}.${nextVersion.patch}`;
 }
