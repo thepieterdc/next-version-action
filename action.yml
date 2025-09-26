@@ -9,7 +9,7 @@ inputs:
   prefix:
     description: 'Prefix to prepend to the result, example: v'
     required: false
-  type:
+  releaseType:
     description: 'Type of version increase (major, minor, patch)'
     required: true
 

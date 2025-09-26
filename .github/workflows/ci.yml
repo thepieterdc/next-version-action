@@ -39,21 +39,21 @@ jobs:
         with:
           current: 'v1.0.0'
           prefix: 'v'
-          type: 'major'
+          releaseType: 'major'
 
       - uses: ./
         id: minor
         with:
           current: 'v1.0.0'
           prefix: 'v'
-          type: 'minor'
+          releaseType: 'minor'
 
       - uses: ./
         id: patch
         with:
           current: 'v1.0.0'
           prefix: 'v'
-          type: 'patch'
+          releaseType: 'patch'
 
       - if:
           steps.major.outputs.next != 'v2.0.0' || steps.minor.outputs.next !=

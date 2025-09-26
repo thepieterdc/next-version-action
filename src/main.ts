@@ -12,7 +12,7 @@ export async function run(): Promise<void> {
     const inputs = inputSchema.parse({
       current: core.getInput('current'),
       prefix: core.getInput('prefix'),
-      type: core.getInput('type'),
+      releaseType: core.getInput('releaseType'),
     });
 
     // Calculate the next version.
