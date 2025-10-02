@@ -2,9 +2,8 @@ import { z } from 'zod/mini';
 
 export const inputSchema = z.object({
   current: z.string(),
-  prefix: z.optional(z.string()),
-  releaseType: z.enum(['major', 'minor', 'patch']),
+  releaseType: z.string(),
+  template: z.string(),
 });
 
 export type Inputs = z.infer<typeof inputSchema>;
-export type ReleaseType = Inputs['releaseType'];
