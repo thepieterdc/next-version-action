@@ -19,8 +19,8 @@ inputs:
 outputs:
   next:
     description:
-      'The next version, optionally with prefix (examples: 1.0.0, v1.1.0,
-      v1.0.1)'
+      'The next version, formatted in the provided template (examples: 1.0.0,
+      v1.1.0, v1.0.1)'
 
 runs:
   using: node24
