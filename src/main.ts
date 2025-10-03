@@ -11,9 +11,12 @@ export async function run(): Promise<void> {
     // Parse the inputs.
     const inputs = inputSchema.parse({
       current: core.getInput('current'),
-      prefix: core.getInput('prefix'),
       releaseType: core.getInput('releaseType'),
+      template: core.getInput('template'),
     });
+    if (!inputs.template.includes(`{${inputs.releaseType}}`)) {
+      throw new Error(`Invalid template, must contain {${inputs.releaseType}}`);
+    }
 
     // Calculate the next version.
     const nextVersion = calculateNextVersion(inputs);

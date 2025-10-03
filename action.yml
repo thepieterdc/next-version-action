@@ -6,18 +6,21 @@ inputs:
   current:
     description: 'Current version number (examples: v1.0.0, 1.0.0)'
     required: true
-  prefix:
-    description: 'Prefix to prepend to the result, example: v'
-    required: false
   releaseType:
     description: 'Type of version increase (major, minor, patch)'
     required: true
+  template:
+    description:
+      'How versions should be formatted, defaults to {major}.{minor}.{patch}.
+      Can be overridden to include a prefix for example, or to support exotic
+      version schemas.'
+    default: '{major}.{minor}.{patch}'
 
 outputs:
   next:
     description:
-      'The next version, optionally with prefix (examples: 1.0.0, v1.1.0,
-      v1.0.1)'
+      'The next version, formatted in the provided template (examples: 1.0.0,
+      v1.1.0, v1.0.1)'
 
 runs:
   using: node24

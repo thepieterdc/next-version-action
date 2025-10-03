@@ -38,24 +38,32 @@ jobs:
         id: major
         with:
           current: 'v1.0.0'
-          prefix: 'v'
           releaseType: 'major'
+          template: 'v{major}.{minor}.{patch}'
 
       - uses: ./
         id: minor
         with:
           current: 'v1.0.0'
-          prefix: 'v'
+          template: 'v{major}.{minor}.{patch}'
           releaseType: 'minor'
 
       - uses: ./
         id: patch
         with:
           current: 'v1.0.0'
-          prefix: 'v'
           releaseType: 'patch'
+          template: 'v{major}.{minor}.{patch}'
+
+      - uses: ./
+        id: hotfix
+        with:
+          current: 'v1.0.0'
+          releaseType: 'hotfix'
+          template: 'v{major}.{minor}.{patch}(-hotfix.{hotfix})?'
 
       - if:
           steps.major.outputs.next != 'v2.0.0' || steps.minor.outputs.next !=
-          'v1.1.0' || steps.patch.outputs.next != 'v1.0.1'
+          'v1.1.0' || steps.patch.outputs.next != 'v1.0.1' ||
+          steps.hotfix.outputs.next != 'v1.0.0-hotfix.1'
         run: exit 1
