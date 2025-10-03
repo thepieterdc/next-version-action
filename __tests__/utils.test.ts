@@ -24,7 +24,7 @@ describe('utils', () => {
     it('should handle prefixes correctly', () => {
       expect(
         calculateNextVersion({
-          current: '1.0.0',
+          current: 'pfix1.0.0',
           releaseType: 'major',
           template: 'pfix{major}.{minor}.{patch}',
         }),
@@ -54,6 +54,11 @@ describe('utils', () => {
       {
         current: '1.2.3-hotfix.1',
         next: '1.2.3-hotfix.2',
+        releaseType: 'hotfix',
+      },
+      {
+        current: '1.20.3-hotfix.14',
+        next: '1.20.3-hotfix.15',
         releaseType: 'hotfix',
       },
     ])(

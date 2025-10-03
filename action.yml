@@ -10,7 +10,10 @@ inputs:
     description: 'Type of version increase (major, minor, patch)'
     required: true
   template:
-    description: 'How versions should be formatted, defaults to {major}.{minor}.{patch}. Can be overridden to include a prefix for example, or to support exotic version schemas.'
+    description:
+      'How versions should be formatted, defaults to {major}.{minor}.{patch}.
+      Can be overridden to include a prefix for example, or to support exotic
+      version schemas.'
     default: '{major}.{minor}.{patch}'
 
 outputs:
