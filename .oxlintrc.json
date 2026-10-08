@@ -1,0 +1,7 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "import", "jest"],
+  "categories": { "correctness": "error" },
+  "env": { "node": true, "jest": true },
+  "ignorePatterns": ["dist", "node_modules", "coverage"]
+}
